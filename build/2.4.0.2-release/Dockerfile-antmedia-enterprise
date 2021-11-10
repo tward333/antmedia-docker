@@ -1,0 +1,24 @@
+FROM private.repo.goes.here/ubuntu:18.04
+
+ARG AntMediaServer
+
+RUN apt-get update > /dev/null
+#RUN apt-get -qq install -y libx11-dev wget libcap-dev openjfx libopenjfx-java libopenjfx-jni > /dev/null
+RUN apt-get -qq install -y libx11-dev wget libcap-dev  > /dev/null
+
+ADD ./${AntMediaServer} /home
+ADD ./install_ant-media-server.sh /home
+
+RUN cd home \
+    && pwd \
+    && chmod 755 install_ant-media-server.sh \
+    && ./install_ant-media-server.sh ${AntMediaServer}
+
+#special fix for broken symlinks
+#RUN cd /usr/local/antmedia/lib/native \
+#	&& rm -f libtcnative-1.dylib libtcnative-1.so libtcnative-1.so.0 \
+#	&& ln -s libtcnative-1.0.dylib libtcnative-1.dylib \
+#	&& ln -s libtcnative-1.so.0.2.25  libtcnative-1.so \
+#	&& ln -s libtcnative-1.so.0.2.25  libtcnative-1.so.0
+
+ENTRYPOINT service antmedia start ;   tail -F /usr/local/antmedia/log/antmedia-error.log 

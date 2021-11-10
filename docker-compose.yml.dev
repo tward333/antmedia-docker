@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  
+
+  antmedia:
+    #image: private.repo.goes.here/tward_antmedia_VERSIONID:2.2.1
+    #image: private.repo.goes.here/tward_antmedia_VERSIONID:2.3.0RC1
+    #image: private.repo.goes.here/tward_antmedia_VERSIONID:2.3.0-release
+    image: private.repo.goes.here/tward_antmedia_VERSIONID:2.4.0.2-release
+    restart: unless-stopped
+    privileged: true
+    volumes:
+        #user credentials
+    - ./antmedia/server.db:/usr/local/antmedia/server.db
+    - ./antmedia/conf:/usr/local/antmedia/conf
+    - ./antmedia/webapps:/usr/local/antmedia/webapps
+
+        #hostmode allows ALL ports unless explicitly blocked in the firewall
+    network_mode: "host"
+    labels:
+      - "traefik.enable=true"

@@ -1,0 +1,9 @@
+*.zip
+data/
+zip/
+testdeploy/
+acme.json
+acme.json*
+antmedia/
+docker-compose.yml
+traefik.toml

@@ -1,0 +1,25 @@
+[http.routers]
+  [http.routers.antmedia]
+    rule = "Host(`DOMAIN`)"
+    entryPoints = ["web"]
+    middlewares = ["antmedia-https-redirect"]
+    service = "noop@internal"
+
+  [http.routers.antmedia-secure]
+    rule = "Host(`DOMAIN`)"
+    entrypoints = ["websecure"]
+    service = "antmedia-cp"
+  [http.routers.antmedia-secure.tls]
+    certResolver = "twardle"
+
+[http.middlewares]
+  [http.middlewares.antmedia-https-redirect.redirectScheme]
+    scheme = "https"
+    permanent = true
+
+[http.services]
+  [http.services.antmedia-cp.loadBalancer]
+    [[http.services.antmedia-cp.loadBalancer.servers]]
+      url = "http://IPADDR:5080"
+
+

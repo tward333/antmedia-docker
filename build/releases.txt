@@ -1,0 +1,5 @@
+#community-release
+https://github.com/ant-media/Ant-Media-Server/releases
+
+#enterprise-release
+ask konrad lol, not public
